@@ -10,20 +10,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res, err) => {
-  res.send("hello world");
-});
-
-app.post("/", async (req, res, err) => {
-  // view-source:http://asp1.krx.co.kr/servlet/krx.asp.XMLSise?code=035420
+app.get("/", async (req, res, err) => {
   const data = await axios.get(
-    `http://asp1.krx.co.kr/servlet/krx.asp.XMLSiseEng?code=${req.body.code}`
+    `http://asp1.krx.co.kr/servlet/krx.asp.XMLSiseEng?code=${req.query.code}`
   );
   parseString(data.data, (err, result) => {
     let body = result.stockprice.TBL_StockInfo[0].$;
-    console.dir(result);
-    console.log(body);
-    res.send(body);
+    res.send(body.CurJuka);
   });
 });
 
