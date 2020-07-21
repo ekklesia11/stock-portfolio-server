@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const scheme = require("../models/scheme");
 require("dotenv").config();
 
 const con = mysql.createConnection({
@@ -9,9 +10,23 @@ const con = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
-con.connect((err) => {
-  if (err) throw err;
+con.connect(async (err) => {
+  if (err) console.log(err.message);
+
+  // create table
+  for (let key in scheme) {
+    await con.query(scheme[key]);
+  }
   console.log("DB Connected!");
 });
 
 module.exports = con;
+
+// {
+//   users,
+//   assets,
+//   stock_class,
+//   stock_items,
+//   user_class,
+//   user_stock,
+// }

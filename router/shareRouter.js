@@ -5,6 +5,8 @@ const XLSX = require("xlsx");
 
 const router = express.Router();
 
+const shareController = require("../controller/shareController");
+
 router.get("/code", async (req, res, err) => {
   let workbook = XLSX.readFile("./assets/code.xls");
   let sheet = workbook.Sheets.Sheet1;
@@ -41,6 +43,13 @@ router.get("/current", async (req, res, err) => {
    **   "now":36850          >>> 현재가(원)
    **  }
    */
+});
+
+router.post("/class", async (req, res, err) => {
+  const className = req.body.class;
+  const result = await shareController.insertStockClass(className);
+  console.log(result);
+  res.send("ok");
 });
 
 // router.get("/", async (req, res, err) => {
