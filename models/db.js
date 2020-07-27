@@ -21,12 +21,3 @@ con.connect(async (err) => {
 });
 
 module.exports = con;
-
-// {
-//   users,
-//   assets,
-//   stock_class,
-//   stock_items,
-//   user_class,
-//   user_stock,
-// }

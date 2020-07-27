@@ -46,10 +46,21 @@ router.get("/current", async (req, res, err) => {
 });
 
 router.post("/class", async (req, res, err) => {
-  const className = req.body.class;
-  const result = await shareController.insertStockClass(className);
-  console.log(result);
-  res.send("ok");
+  try {
+    const className = req.body.class;
+    const userId = req.body.userId;
+    const result = await shareController.insertStockClass(className, userId);
+    let response = {
+      status: 200,
+      id: Array.isArray(result)
+        ? result[0].id
+        : (response.id = result.insertId),
+      class: className,
+    };
+    res.send(response);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 });
 
 // router.get("/", async (req, res, err) => {
