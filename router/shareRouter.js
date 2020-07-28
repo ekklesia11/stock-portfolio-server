@@ -52,13 +52,12 @@ router.post("/class", async (req, res, err) => {
     const result = await shareController.insertStockClass(className, userId);
     let response = {
       status: 200,
-      id: Array.isArray(result)
-        ? result[0].id
-        : (response.id = result.insertId),
+      id: Array.isArray(result) ? result[0].id : result.insertId,
       class: className,
     };
     res.send(response);
   } catch (err) {
+    console.log(err);
     res.sendStatus(500);
   }
 });
